@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/ROOF-ESTIMATOR/static/css/main.02b2e64c.css",
+    "main.js": "/ROOF-ESTIMATOR/static/js/main.af322d3c.js",
+    "static/js/977.5be62def.chunk.js": "/ROOF-ESTIMATOR/static/js/977.5be62def.chunk.js",
+    "static/js/455.cd297ce0.chunk.js": "/ROOF-ESTIMATOR/static/js/455.cd297ce0.chunk.js",
+    "static/media/spritesheet.svg": "/ROOF-ESTIMATOR/static/media/spritesheet.a4e0eb7ad904a4858361.svg",
+    "index.html": "/ROOF-ESTIMATOR/index.html",
+    "main.02b2e64c.css.map": "/ROOF-ESTIMATOR/static/css/main.02b2e64c.css.map",
+    "main.af322d3c.js.map": "/ROOF-ESTIMATOR/static/js/main.af322d3c.js.map",
+    "977.5be62def.chunk.js.map": "/ROOF-ESTIMATOR/static/js/977.5be62def.chunk.js.map",
+    "455.cd297ce0.chunk.js.map": "/ROOF-ESTIMATOR/static/js/455.cd297ce0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.02b2e64c.css",
+    "static/js/main.af322d3c.js"
+  ]
+}
