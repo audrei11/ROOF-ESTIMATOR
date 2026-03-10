@@ -164,7 +164,7 @@ export default function ProjectViewer() {
       setCenter(data.center || data.coords || [39.7684, -86.1581]);
       setAddress(data.address || '');
       setPitch(data.pitch || '4/12');
-      setTileProvider(data.tileProvider || 'esriSatellite');
+      setTileProvider(data.tileProvider || 'googleSatellite');
 
       // Do NOT restore edges/vertices/facets on page refresh — start with a clean canvas.
       // Drawing data is only preserved across HMR via window.__roofCache (above).
