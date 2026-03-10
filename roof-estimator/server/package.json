@@ -1,0 +1,13 @@
+{
+  "name": "trojan-roofing-server",
+  "version": "1.0.0",
+  "description": "Puppeteer PDF report server for Precision Roofing",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "express": "^4.21.2",
+    "puppeteer": "^24.2.1"
+  }
+}
