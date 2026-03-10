@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { path: '/calendar', label: 'Calendar', icon: 'calendar' },
   { path: '/performance', label: 'Performance', icon: 'chart' },
   { divider: true, label: 'Tools' },
-  { path: '/roofr-sites', label: 'Roofr Sites', icon: 'globe', badge: 'Beta' },
+  { path: '/roofr-sites', label: 'Precision Sites', icon: 'globe', badge: 'Beta' },
   { path: '/', label: 'Instant Estimator', icon: 'zap' },
   { path: '/measurements', label: 'Measurements', icon: 'ruler' },
   { path: '/proposals', label: 'Proposals', icon: 'file' },
