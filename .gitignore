@@ -1,0 +1,11 @@
+node_modules/
+roof-estimator/node_modules/
+roof-estimator/server/node_modules/
+roof-estimator/build/
+roof-estimator/server/proposals.db
+roof-estimator/server/proposals.db-shm
+roof-estimator/server/proposals.db-wal
+.env
+.env.local
+.env*.local
+.vercel
