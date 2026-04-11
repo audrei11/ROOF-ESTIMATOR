@@ -24,6 +24,7 @@ import Payments from './pages/Payments';
 import RoofrSites from './pages/RoofrSites';
 import Jarvis from './pages/Jarvis';
 import Pipeline from './pages/Pipeline';
+import Workflow from './pages/Workflow';
 import './App.css';
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="/payments" element={<Payments />} />
           <Route path="/jarvis" element={<Jarvis />} />
           <Route path="/pipeline" element={<Pipeline />} />
+          <Route path="/workflow" element={<Workflow />} />
           <Route path="/roofr-sites" element={<RoofrSites />} />
         </Route>
 
