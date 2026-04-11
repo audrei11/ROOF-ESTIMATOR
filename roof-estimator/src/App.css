@@ -1914,13 +1914,12 @@ body {
 }
 .nav-brand-logo-only {
   justify-content: center;
-  padding: 10px 12px;
+  padding: 14px 16px;
 }
 .nav-brand-full-logo {
-  width: 200px;
-  height: 96px;
+  width: 150px;
+  height: auto;
   object-fit: contain;
-  object-position: center;
   display: block;
 }
 .nav-brand-icon {
