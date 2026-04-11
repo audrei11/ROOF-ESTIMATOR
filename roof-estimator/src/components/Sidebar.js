@@ -30,15 +30,8 @@ export default function Sidebar() {
   return (
     <div className="nav-sidebar">
       {/* Brand */}
-      <div className="nav-brand">
-        <div className="nav-brand-icon nav-brand-icon-logo">
-          <img src="/ahjin-logo.png" alt="Ahjin Roofing System" className="nav-brand-logo-img" />
-        </div>
-        <div className="nav-brand-info">
-          <span className="nav-brand-name">Ahjin Roofing System</span>
-          <span className="nav-brand-email">admin@ahjin.com</span>
-        </div>
-        <svg className="nav-brand-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
+      <div className="nav-brand nav-brand-logo-only">
+        <img src="/ahjin-logo.png" alt="Ahjin Roofing System" className="nav-brand-full-logo" />
       </div>
 
       {/* Nav Items */}
