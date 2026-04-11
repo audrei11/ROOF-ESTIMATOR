@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const NAV_ITEMS = [
   { path: '/', label: 'Home', icon: 'home' },
   { path: '/jobs', label: 'Jobs', icon: 'briefcase' },
-  { path: '/pipeline', label: 'Pipeline', icon: 'pipeline' },
   { path: '/calendar', label: 'Calendar', icon: 'calendar' },
   { path: '/performance', label: 'Performance', icon: 'chart' },
   { path: '/jarvis', label: 'Jarvis AI', icon: 'jarvis', badge: 'AI' },
@@ -15,6 +14,7 @@ const NAV_ITEMS = [
   { path: '/work-orders', label: 'Work Orders', icon: 'clipboard' },
   { path: '/invoices', label: 'Invoices', icon: 'receipt' },
   { divider: true, label: 'Manage' },
+  { path: '/pipeline', label: 'Pipeline', icon: 'pipeline' },
   { path: '/contacts', label: 'Contacts', icon: 'contacts' },
   { path: '/file-manager', label: 'File Manager', icon: 'folder' },
   { path: '/communications', label: 'Communications', icon: 'communications' },
