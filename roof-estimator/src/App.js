@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
@@ -24,6 +23,7 @@ import Settings from './pages/Settings';
 import Payments from './pages/Payments';
 import RoofrSites from './pages/RoofrSites';
 import Jarvis from './pages/Jarvis';
+import Pipeline from './pages/Pipeline';
 import './App.css';
 
 function App() {
@@ -49,6 +49,7 @@ function App() {
           <Route path="/communications" element={<Communications />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/jarvis" element={<Jarvis />} />
+          <Route path="/pipeline" element={<Pipeline />} />
           <Route path="/roofr-sites" element={<RoofrSites />} />
         </Route>
 

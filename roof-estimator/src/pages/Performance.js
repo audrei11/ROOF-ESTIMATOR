@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const TABS = ['Job Report', 'Overview', 'Workflow', 'Pipeline'];
+const TABS = ['Job Report', 'Overview', 'Workflow'];
 
 /* ── Mock enriched job data ── */
 const MOCK_JOBS = [
