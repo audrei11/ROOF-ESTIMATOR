@@ -23,6 +23,7 @@ import Communications from './pages/Communications';
 import Settings from './pages/Settings';
 import Payments from './pages/Payments';
 import RoofrSites from './pages/RoofrSites';
+import Jarvis from './pages/Jarvis';
 import './App.css';
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
           <Route path="/automations" element={<Automations />} />
           <Route path="/communications" element={<Communications />} />
           <Route path="/payments" element={<Payments />} />
+          <Route path="/jarvis" element={<Jarvis />} />
           <Route path="/roofr-sites" element={<RoofrSites />} />
         </Route>
 
