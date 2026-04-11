@@ -31,7 +31,24 @@ export default function Sidebar() {
     <div className="nav-sidebar">
       {/* Brand */}
       <div className="nav-brand">
-        <div className="nav-brand-icon">T</div>
+        <div className="nav-brand-icon nav-brand-icon-logo">
+          <svg width="32" height="36" viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Shield body */}
+            <path d="M20 2L3 9v17c0 10.5 7.5 19.5 17 22 9.5-2.5 17-11.5 17-22V9L20 2z" fill="url(#shieldGrad)" stroke="#5b8ab0" strokeWidth="1"/>
+            {/* Roof tiles pattern */}
+            <path d="M11 17l3-3.5 3 3.5M17 17l3-3.5 3 3.5M23 17l3-3.5 3 3.5" stroke="#a0aec0" strokeWidth="1.1" strokeLinecap="round"/>
+            <path d="M14 21l3-3.5 3 3.5M20 21l3-3.5 3 3.5" stroke="#a0aec0" strokeWidth="1.1" strokeLinecap="round"/>
+            {/* A letter */}
+            <path d="M13 34l7-16 7 16" stroke="#e2e8f0" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M15.8 29h8.4" stroke="#e2e8f0" strokeWidth="2" strokeLinecap="round"/>
+            <defs>
+              <linearGradient id="shieldGrad" x1="20" y1="2" x2="20" y2="48" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#2d5a8e"/>
+                <stop offset="100%" stopColor="#1a3554"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
         <div className="nav-brand-info">
           <span className="nav-brand-name">Ahjin Roofing System</span>
           <span className="nav-brand-email">admin@ahjin.com</span>
