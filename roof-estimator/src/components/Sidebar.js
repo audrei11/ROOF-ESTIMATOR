@@ -31,8 +31,8 @@ export default function Sidebar() {
       <div className="nav-brand">
         <div className="nav-brand-icon">T</div>
         <div className="nav-brand-info">
-          <span className="nav-brand-name">Precision Roofing</span>
-          <span className="nav-brand-email">admin@precision.com</span>
+          <span className="nav-brand-name">Ahjin Roofing System</span>
+          <span className="nav-brand-email">admin@ahjin.com</span>
         </div>
         <svg className="nav-brand-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
