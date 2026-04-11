@@ -25,6 +25,7 @@ import RoofrSites from './pages/RoofrSites';
 import Jarvis from './pages/Jarvis';
 import Pipeline from './pages/Pipeline';
 import Workflow from './pages/Workflow';
+import EmployeeAssign from './pages/EmployeeAssign';
 import './App.css';
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
           <Route path="/jarvis" element={<Jarvis />} />
           <Route path="/pipeline" element={<Pipeline />} />
           <Route path="/workflow" element={<Workflow />} />
+          <Route path="/employee-assign" element={<EmployeeAssign />} />
           <Route path="/roofr-sites" element={<RoofrSites />} />
         </Route>
 
