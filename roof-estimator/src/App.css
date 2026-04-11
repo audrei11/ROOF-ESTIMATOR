@@ -2456,6 +2456,104 @@ body {
   .home-stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── New Home Dashboard styles ── */
+.home-greeting h1 { font-size: 26px; font-weight: 700; color: #1e293b; margin: 0; }
+.home-greeting-name { color: #2563eb; }
+.home-date { font-size: 13px; color: #94a3b8; margin: 4px 0 0; }
+.home-greeting { flex-direction: column; align-items: flex-start; gap: 0; }
+
+.home-stat-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+.home-stat-card { gap: 0; }
+.home-stat-count { font-size: 32px; font-weight: 700; color: #1e293b; margin: 0 0 4px; }
+.home-stat-label { font-size: 13px; color: #64748b; margin: 0; font-weight: 500; }
+
+.home-section-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.home-section-header .home-section-title { margin-bottom: 4px; }
+.home-section-header .home-section-sub { margin-bottom: 0; }
+.home-view-all-btn {
+  background: none; border: none;
+  font-size: 13px; font-weight: 600; color: #2563eb;
+  cursor: pointer; padding: 4px 0; white-space: nowrap;
+}
+.home-view-all-btn:hover { color: #1d4ed8; }
+
+/* Pipeline grid */
+.home-pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+.home-pipeline-card {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; padding: 16px 14px;
+  cursor: pointer; transition: box-shadow 0.15s;
+  text-align: center;
+}
+.home-pipeline-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.home-pipeline-count { font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+.home-pipeline-label { font-size: 12px; color: #64748b; font-weight: 500; }
+
+/* Quick actions */
+.home-quick-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.home-quick-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; font-size: 14px; font-weight: 600;
+  color: #1e293b; cursor: pointer; transition: all 0.15s;
+}
+.home-quick-btn:hover { background: #f8fafc; border-color: #2563eb; color: #2563eb; }
+
+/* Recent list */
+.home-recent-list { display: flex; flex-direction: column; gap: 4px; }
+.home-recent-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 10px; cursor: pointer; transition: box-shadow 0.15s;
+}
+.home-recent-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.home-recent-icon {
+  width: 38px; height: 38px; border-radius: 9px;
+  background: #f0f9ff; color: #2563eb;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.home-recent-info { flex: 1; min-width: 0; }
+.home-recent-address { display: block; font-size: 14px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.home-recent-meta { display: block; font-size: 12px; color: #94a3b8; margin-top: 2px; }
+.home-stage-badge {
+  font-size: 12px; font-weight: 600; padding: 4px 10px;
+  border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+}
+
+/* Calendar empty state */
+.home-cal-empty {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; padding: 32px; color: #94a3b8; font-size: 14px;
+}
+
+/* Empty state */
+.home-empty { text-align: center; padding: 40px 20px; color: #94a3b8; }
+.home-empty p { margin: 0 0 16px; font-size: 15px; }
+
+@media (max-width: 1100px) {
+  .home-pipeline-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 700px) {
+  .home-pipeline-grid { grid-template-columns: repeat(2, 1fr); }
+  .home-quick-actions { flex-direction: column; }
+}
+
 /* ===================================================================
    DASHBOARD PAGE
    =================================================================== */
