@@ -23,6 +23,10 @@ app.get('/api/health', (_req, res) => {
 const proposalsRouter = require('./routes/proposals');
 app.use('/api/proposals', proposalsRouter);
 
+/* ─── JARVIS AI API ────────────────────────────────────────────────── */
+const jarvisRouter = require('./routes/jarvis');
+app.use('/api/jarvis', jarvisRouter);
+
 /* ─── Serve React build if it exists (production) ──────────────────── */
 const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.static(buildPath));

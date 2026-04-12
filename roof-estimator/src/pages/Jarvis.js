@@ -1,103 +1,121 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { gatherContext } from '../utils/jarvisContext';
+import { executeActions } from '../utils/jarvisActions';
 
+/* ── Quick suggestion chips ──────────────────────────────────────────── */
 const SUGGESTIONS = [
-  'Go to Proposals',
-  'Show me my contacts',
-  'Open Measurements',
-  'Go to Jobs',
-  'Open Calendar',
-  'Go to Invoices',
+  'Show me all contacts',
+  'How many leads do we have?',
+  'Who is available for work?',
+  'Show me the pipeline status',
+  'Open proposals',
+  'Log a call with a client',
+  'Move a contact to Signed',
+  'Create a new contact',
+  'Show recent activities',
+  'What proposals are pending?',
 ];
 
-// Simple rule-based engine (will be replaced by Claude API)
-function processCommand(input, navigate) {
-  const msg = input.toLowerCase().trim();
-
-  const routes = [
-    { keywords: ['home', 'dashboard'],             path: '/',               label: 'Home' },
-    { keywords: ['job', 'jobs', 'pipeline'],        path: '/jobs',           label: 'Jobs' },
-    { keywords: ['calendar', 'schedule'],           path: '/calendar',       label: 'Calendar' },
-    { keywords: ['measurement', 'measure', 'roof'], path: '/measurements',   label: 'Measurements' },
-    { keywords: ['proposal', 'proposals', 'quote'], path: '/proposals',      label: 'Proposals' },
-    { keywords: ['new proposal', 'create proposal'],path: '/proposals/new',  label: 'New Proposal' },
-    { keywords: ['pdf', 'signer', 'sign'],          path: '/pdf-signer',     label: 'PDF Signer' },
-    { keywords: ['material', 'order', 'orders'],    path: '/material-orders',label: 'Material Orders' },
-    { keywords: ['work order'],                     path: '/work-orders',    label: 'Work Orders' },
-    { keywords: ['invoice', 'invoices', 'billing'], path: '/invoices',       label: 'Invoices' },
-    { keywords: ['contact', 'contacts', 'lead'],    path: '/contacts',       label: 'Contacts' },
-    { keywords: ['file', 'manager', 'files'],       path: '/file-manager',   label: 'File Manager' },
-    { keywords: ['communication', 'message'],       path: '/communications', label: 'Communications' },
-    { keywords: ['performance', 'analytics'],       path: '/performance',    label: 'Performance' },
-    { keywords: ['setting', 'settings'],            path: '/settings',       label: 'Settings' },
-  ];
-
-  for (const route of routes) {
-    if (route.keywords.some(k => msg.includes(k))) {
-      setTimeout(() => navigate(route.path), 800);
-      return {
-        text: `Navigating to **${route.label}**...`,
-        action: 'navigate',
-        path: route.path,
-      };
-    }
-  }
-
-  if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
-    return { text: "Hello! I'm JARVIS, your roofing business assistant. How can I help you today?" };
-  }
-  if (msg.includes('help') || msg.includes('what can you do')) {
-    return {
-      text: `Here's what I can do right now:\n\n• **Navigate** — "Go to Proposals", "Open Contacts"\n• **Create** — "New Proposal", "Add Contact"\n• **Search** — coming soon\n• **AI Actions** — coming soon (needs API key)`,
-    };
-  }
-  if (msg.includes('thank')) {
-    return { text: "You're welcome! Anything else I can help with?" };
-  }
-
-  return {
-    text: `I understood: "${input}"\n\nFull AI capabilities coming soon. For now I can navigate the app — try saying **"Go to Contacts"** or **"Open Proposals"**.`,
-  };
-}
-
+/* ══════════════════════════════════════════════════════════════════════
+   JARVIS Page Component
+   ══════════════════════════════════════════════════════════════════════ */
 export default function Jarvis() {
-  const navigate = useNavigate();
+  const navigate  = useNavigate();
+  const bottomRef = useRef(null);
+  const inputRef  = useRef(null);
+
   const [messages, setMessages] = useState([
     {
-      id: 1, role: 'jarvis',
-      text: "Hello! I'm **JARVIS**, your AI assistant for Precision Roofing.\n\nI can navigate the app, manage your contacts, create proposals, and more.\n\nWhat would you like to do today?",
+      id: 1,
+      role: 'jarvis',
+      text: "Hello! I'm **JARVIS** — your AI assistant for Ahjin Roofing System.\n\nI have live access to your contacts, pipeline, proposals, employees, workflows, and more. I can answer questions, take actions, and navigate the app for you.\n\nWhat would you like to do?",
       time: now(),
-    }
+    },
   ]);
-  const [input, setInput] = useState('');
+  const [input,   setInput]   = useState('');
   const [loading, setLoading] = useState(false);
-  const bottomRef = useRef(null);
-  const inputRef = useRef(null);
+  // Conversation history for multi-turn context (role/content pairs sent to backend)
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const send = async (text) => {
+  /* ── Send message ──────────────────────────────────────────────────── */
+  const send = useCallback(async (text) => {
     const userText = (text || input).trim();
-    if (!userText) return;
+    if (!userText || loading) return;
 
     setInput('');
-    setMessages(prev => [...prev, { id: Date.now(), role: 'user', text: userText, time: now() }]);
+    const userMsg = { id: Date.now(), role: 'user', text: userText, time: now() };
+    setMessages(prev => [...prev, userMsg]);
     setLoading(true);
 
-    await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
+    try {
+      // Gather live app data
+      const context = await gatherContext();
 
-    const result = processCommand(userText, navigate);
-    setMessages(prev => [...prev, { id: Date.now() + 1, role: 'jarvis', text: result.text, time: now() }]);
-    setLoading(false);
-    inputRef.current?.focus();
-  };
+      // Call JARVIS backend
+      const resp = await fetch('/api/jarvis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userText, context, history }),
+      });
+
+      let data;
+      if (resp.ok) {
+        data = await resp.json();
+      } else {
+        data = {
+          message: "I couldn't reach the server. Make sure the backend server is running (`npm run start:server`).",
+          actions: [],
+        };
+      }
+
+      const jarvisMsg = {
+        id: Date.now() + 1,
+        role: 'jarvis',
+        text: data.message || "I didn't get a response. Please try again.",
+        time: now(),
+      };
+
+      setMessages(prev => [...prev, jarvisMsg]);
+
+      // Update conversation history for multi-turn context
+      setHistory(prev => [
+        ...prev.slice(-14), // keep last 7 turns (14 messages)
+        { role: 'user',      content: userText },
+        { role: 'assistant', content: data.message || '' },
+      ]);
+
+      // Execute any actions (localStorage writes, navigation)
+      if (data.actions?.length) {
+        executeActions(data.actions, navigate);
+      }
+
+    } catch (err) {
+      console.error('[JARVIS] fetch error:', err);
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          role: 'jarvis',
+          text: "I'm having trouble connecting. Check that the backend server is running on port 3001.",
+          time: now(),
+        },
+      ]);
+    } finally {
+      setLoading(false);
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [input, loading, history, navigate]);
 
   const handleKey = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   };
 
+  /* ── Render ────────────────────────────────────────────────────────── */
   return (
     <div className="jarvis-page">
 
@@ -116,10 +134,21 @@ export default function Jarvis() {
             <p className="jarvis-subtitle">Just A Rather Very Intelligent System</p>
           </div>
         </div>
-        <span className="jarvis-status">
-          <span className="jarvis-status-dot" />
-          Online
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span className="jarvis-status">
+            <span className="jarvis-status-dot" />
+            AI Online
+          </span>
+          {history.length > 0 && (
+            <button
+              onClick={() => { setHistory([]); setMessages(prev => prev.slice(0, 1)); }}
+              style={{ background: 'none', border: '1px solid #334155', color: '#94a3b8', borderRadius: 6, padding: '4px 10px', fontSize: 12, cursor: 'pointer' }}
+              title="Clear conversation"
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </div>
 
       {/* ── Chat Window ── */}
@@ -146,6 +175,7 @@ export default function Jarvis() {
             </div>
           ))}
 
+          {/* Typing indicator */}
           {loading && (
             <div className="jarvis-msg jarvis-msg-jarvis">
               <div className="jarvis-msg-avatar">
@@ -168,7 +198,7 @@ export default function Jarvis() {
         {/* Suggestions */}
         <div className="jarvis-suggestions">
           {SUGGESTIONS.map(s => (
-            <button key={s} className="jarvis-suggestion-chip" onClick={() => send(s)}>
+            <button key={s} className="jarvis-suggestion-chip" onClick={() => send(s)} disabled={loading}>
               {s}
             </button>
           ))}
@@ -179,11 +209,12 @@ export default function Jarvis() {
           <textarea
             ref={inputRef}
             className="jarvis-input"
-            placeholder="Ask JARVIS anything... (Enter to send)"
+            placeholder="Ask JARVIS anything... (Enter to send, Shift+Enter for new line)"
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKey}
             rows={1}
+            disabled={loading}
           />
           <button
             className="jarvis-send-btn"
@@ -198,24 +229,30 @@ export default function Jarvis() {
         </div>
 
         <p className="jarvis-disclaimer">
-          JARVIS is currently in basic mode. Connect a Claude API key to unlock full AI capabilities.
+          JARVIS has live access to your contacts, pipeline, proposals, employees, and workflows.
         </p>
       </div>
     </div>
   );
 }
 
+/* ── Helpers ─────────────────────────────────────────────────────────── */
+
 function FormattedText({ text }) {
-  // Bold **text** support
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  // Support **bold**, newlines, and bullet points
+  const lines = (text || '').split('\n');
   return (
-    <p style={{ margin: 0, whiteSpace: 'pre-wrap', lineHeight: 1.7 }}>
-      {parts.map((part, i) =>
-        part.startsWith('**') && part.endsWith('**')
-          ? <strong key={i}>{part.slice(2, -2)}</strong>
-          : part
-      )}
-    </p>
+    <div style={{ margin: 0, lineHeight: 1.7 }}>
+      {lines.map((line, li) => {
+        const parts = line.split(/(\*\*[^*]+\*\*)/g);
+        const formatted = parts.map((part, i) =>
+          part.startsWith('**') && part.endsWith('**')
+            ? <strong key={i}>{part.slice(2, -2)}</strong>
+            : part
+        );
+        return <p key={li} style={{ margin: li === 0 ? 0 : '4px 0 0' }}>{formatted}</p>;
+      })}
+    </div>
   );
 }
 

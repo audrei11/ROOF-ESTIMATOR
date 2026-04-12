@@ -1,4 +1,13 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
+
+const CALENDAR_KEY = 'ahjin-calendar-events';
+
+function loadEvents() {
+  try {
+    const d = localStorage.getItem(CALENDAR_KEY);
+    return d ? JSON.parse(d) : INITIAL_EVENTS;
+  } catch { return INITIAL_EVENTS; }
+}
 
 const DAYS   = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -26,7 +35,11 @@ export default function Calendar() {
   const today = useMemo(() => new Date(), []);
   const [month, setMonth]   = useState(today.getMonth());
   const [year,  setYear]    = useState(today.getFullYear());
-  const [events, setEvents] = useState(INITIAL_EVENTS);
+  const [events, setEvents] = useState(loadEvents);
+
+  useEffect(() => {
+    localStorage.setItem(CALENDAR_KEY, JSON.stringify(events));
+  }, [events]);
   const [selected, setSelected] = useState(null); // { day, month, year }
   const [modal, setModal]   = useState(null); // null | 'new' | id
   const [form, setForm]     = useState(EMPTY_FORM);

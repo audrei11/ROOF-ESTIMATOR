@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 const crypto = require('crypto');
+const { sendProposalEmail } = require('../mailer');
 
 /* ═══════════════════════════════════════════════════════════════════════════
    Proposals API Routes
@@ -97,13 +98,28 @@ router.delete('/:id', (req, res) => {
   res.json({ success: true });
 });
 
-/* ─── Mark as sent ────────────────────────────────────────────────────── */
-router.post('/:id/send', (req, res) => {
+/* ─── Mark as sent + email customer ──────────────────────────────────── */
+router.post('/:id/send', async (req, res) => {
+  const proposal = db.prepare('SELECT * FROM proposals WHERE id = ?').get(req.params.id);
+  if (!proposal) return res.status(404).json({ error: 'Proposal not found' });
+
   const now = new Date().toISOString();
-  db.prepare(`
-    UPDATE proposals SET status = 'sent', sent_at = ?, updated_at = ? WHERE id = ?
-  `).run(now, now, req.params.id);
-  res.json({ success: true, status: 'sent' });
+  db.prepare(`UPDATE proposals SET status = 'sent', sent_at = ?, updated_at = ? WHERE id = ?`)
+    .run(now, now, req.params.id);
+
+  // Send email to customer (non-blocking — don't fail if email errors)
+  let emailSent = false;
+  let emailError = null;
+  try {
+    proposal.options = JSON.parse(proposal.options || '[]');
+    await sendProposalEmail(proposal);
+    emailSent = true;
+  } catch (err) {
+    emailError = err.message;
+    console.error('[Mailer] Failed to send proposal email:', err.message);
+  }
+
+  res.json({ success: true, status: 'sent', emailSent, emailError });
 });
 
 /* ═══════════════════════════════════════════════════════════════════════════
