@@ -1045,9 +1045,9 @@ function FacetOverlay({ polygons, activeTab, onFacetAssign, selectedFacetId, fac
           dashArray: null, interactive: true,
         };
       } else if (hasPitch) {
-        // Transparent fill — satellite visible through, no outline (EdgeRenderer already shows boundaries)
+        // Fully transparent — satellite visible through, zero fill/stroke so no seam lines
         style = {
-          fillColor: '#ffffff', fillOpacity: 0.03,
+          fillColor: 'transparent', fillOpacity: 0,
           color: 'transparent', weight: 0, opacity: 0,
           dashArray: null, interactive: true,
         };
@@ -1077,7 +1077,7 @@ function FacetOverlay({ polygons, activeTab, onFacetAssign, selectedFacetId, fac
         poly.on('mouseout', () => {
           if (isSelected) return;
           poly.setStyle(hasPitch
-            ? { fillOpacity: 0.03, fillColor: '#ffffff', color: '#d1d5db', weight: 1.5, opacity: 0.7 }
+            ? { fillOpacity: 0, fillColor: 'transparent', color: 'transparent', weight: 0, opacity: 0 }
             : { fillOpacity: 0.15, fillColor: '#dc2626', color: '#ef4444', weight: 2 });
         });
       }
@@ -2193,7 +2193,7 @@ const MapViewer = forwardRef(function MapViewer({
 
       if (isFacets) {
         // FACETS TAB: Hide FeatureGroup layers — FacetOverlay Canvas handles all rendering
-        layer.setStyle({ fillOpacity: 0, opacity: 0, interactive: false });
+        layer.setStyle({ fillOpacity: 0, fillColor: 'transparent', color: 'transparent', weight: 0, opacity: 0, interactive: false });
         if (path) {
           path.style.pointerEvents = 'none';
           path.classList.remove('leaflet-interactive');
