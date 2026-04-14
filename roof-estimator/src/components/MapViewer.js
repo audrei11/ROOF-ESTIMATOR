@@ -1045,11 +1045,10 @@ function FacetOverlay({ polygons, activeTab, onFacetAssign, selectedFacetId, fac
           dashArray: null, interactive: true,
         };
       } else if (hasPitch) {
-        // Fully transparent — satellite visible through, zero fill/stroke so no seam lines
+        // Completely invisible — stroke:false + fill:false so SVG renders nothing at all
         style = {
-          fillColor: 'transparent', fillOpacity: 0,
-          color: 'transparent', weight: 0, opacity: 0,
-          dashArray: null, interactive: true,
+          stroke: false, fill: false,
+          interactive: true,
         };
       } else {
         // No pitch — slightly visible so user knows to assign
@@ -1077,7 +1076,7 @@ function FacetOverlay({ polygons, activeTab, onFacetAssign, selectedFacetId, fac
         poly.on('mouseout', () => {
           if (isSelected) return;
           poly.setStyle(hasPitch
-            ? { fillOpacity: 0, fillColor: 'transparent', color: 'transparent', weight: 0, opacity: 0 }
+            ? { stroke: false, fill: false }
             : { fillOpacity: 0.15, fillColor: '#dc2626', color: '#ef4444', weight: 2 });
         });
       }
