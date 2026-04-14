@@ -19,6 +19,7 @@ import FileManager from './pages/FileManager';
 import Catalog from './pages/Catalog';
 import Automations from './pages/Automations';
 import Communications from './pages/Communications';
+import InsuranceCommunication from './pages/InsuranceCommunication';
 import Settings from './pages/Settings';
 import Payments from './pages/Payments';
 import RoofrSites from './pages/RoofrSites';
@@ -49,6 +50,7 @@ function App() {
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/automations" element={<Automations />} />
           <Route path="/communications" element={<Communications />} />
+          <Route path="/insurance-communication" element={<InsuranceCommunication />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/jarvis" element={<Jarvis />} />
           <Route path="/pipeline" element={<Pipeline />} />
