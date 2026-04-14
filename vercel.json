@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "buildCommand": "cd roof-estimator && CI=false npm run build",
+  "outputDirectory": "roof-estimator/build",
+  "installCommand": "cd roof-estimator && npm install",
+  "framework": "create-react-app",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
