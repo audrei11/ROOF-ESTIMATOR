@@ -184,8 +184,8 @@ function EdgeRenderer({ edges, showEdgeColors, activeEdgeTool, activeTab, select
   // Keep callback ref fresh without triggering layer re-creation
   useEffect(() => { callbackRef.current = onEdgeClick; }, [onEdgeClick]);
 
-  // Show edges on all tabs (Roofr shows edge measurements on Facets tab too)
-  const shouldShow = !!(edges && edges.length > 0);
+  // Hide edges on Facets tab — user only wants to see facet fills/colors there
+  const shouldShow = !!(edges && edges.length > 0) && activeTab !== 'facets';
   // Edges are interactive (clickable) on the Edges tab AND during delete_edge mode.
   // On Draw tab they're visible for reference but MUST NOT intercept map clicks.
   const edgesInteractive = activeTab === 'edges' || activeEdgeTool === 'delete_edge';
