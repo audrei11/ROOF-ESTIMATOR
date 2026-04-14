@@ -34,6 +34,17 @@ const PROJECT_DATA = [
     completedAt: 'Yesterday at 4:18 AM',
     polygons: [],
     edges: [],
+    measurements: {
+      totalFootprintArea: 1852,
+      totalRoofArea: 1952,
+      pitch: '4/12',
+      facets: [
+        { id: 'F1', area: 980, pitch: '4/12' },
+        { id: 'F2', area: 872, pitch: '4/12' },
+        { id: 'F3', area: 100, pitch: '4/12' },
+      ],
+      edgeSummary: { eave: 118, ridge: 56, valley: 0, hip: 24, rake: 42, wall_flashing: 0, step_flashing: 0 },
+    },
   },
   {
     id: '3',
@@ -66,6 +77,17 @@ const PROJECT_DATA = [
     completedAt: 'Feb. 17 at 11:31 PM',
     polygons: [],
     edges: [],
+    measurements: {
+      totalFootprintArea: 2200,
+      totalRoofArea: 2319,
+      pitch: '4/12',
+      facets: [
+        { id: 'F1', area: 1180, pitch: '4/12' },
+        { id: 'F2', area: 1020, pitch: '4/12' },
+        { id: 'F3', area: 119,  pitch: '4/12' },
+      ],
+      edgeSummary: { eave: 142, ridge: 58, valley: 0, hip: 36, rake: 0, wall_flashing: 18, step_flashing: 0 },
+    },
   },
   {
     id: '5',
@@ -82,6 +104,16 @@ const PROJECT_DATA = [
     completedAt: 'Feb. 16 at 10:13 PM',
     polygons: [],
     edges: [],
+    measurements: {
+      totalFootprintArea: 1680,
+      totalRoofArea: 2019,
+      pitch: '8/12',
+      facets: [
+        { id: 'F1', area: 1050, pitch: '8/12' },
+        { id: 'F2', area:  969, pitch: '8/12' },
+      ],
+      edgeSummary: { eave: 96, ridge: 48, valley: 32, hip: 0, rake: 52, wall_flashing: 0, step_flashing: 14 },
+    },
   },
   {
     id: '6',
@@ -98,6 +130,17 @@ const PROJECT_DATA = [
     completedAt: 'Feb. 13 at 9:48 PM',
     polygons: [],
     edges: [],
+    measurements: {
+      totalFootprintArea: 2100,
+      totalRoofArea: 2213,
+      pitch: '4/12',
+      facets: [
+        { id: 'F1', area: 1124, pitch: '4/12' },
+        { id: 'F2', area:  989, pitch: '4/12' },
+        { id: 'F3', area:  100, pitch: '4/12' },
+      ],
+      edgeSummary: { eave: 132, ridge: 62, valley: 0, hip: 28, rake: 44, wall_flashing: 0, step_flashing: 0 },
+    },
   },
   {
     id: '7',
@@ -130,6 +173,17 @@ const PROJECT_DATA = [
     completedAt: 'Feb. 10 at 3:36 AM',
     polygons: [],
     edges: [],
+    measurements: {
+      totalFootprintArea: 1940,
+      totalRoofArea: 2101,
+      pitch: '5/12',
+      facets: [
+        { id: 'F1', area: 1068, pitch: '5/12' },
+        { id: 'F2', area:  833, pitch: '5/12' },
+        { id: 'F3', area:  200, pitch: '5/12' },
+      ],
+      edgeSummary: { eave: 122, ridge: 54, valley: 18, hip: 42, rake: 0, wall_flashing: 24, step_flashing: 0 },
+    },
   },
   {
     id: '9',
@@ -146,6 +200,16 @@ const PROJECT_DATA = [
     completedAt: 'Feb. 9 at 7:22 PM',
     polygons: [],
     edges: [],
+    measurements: {
+      totalFootprintArea: 1760,
+      totalRoofArea: 2038,
+      pitch: '7/12',
+      facets: [
+        { id: 'F1', area: 1060, pitch: '7/12' },
+        { id: 'F2', area:  978, pitch: '7/12' },
+      ],
+      edgeSummary: { eave: 108, ridge: 52, valley: 28, hip: 44, rake: 0, wall_flashing: 0, step_flashing: 20 },
+    },
   },
   {
     id: '10',

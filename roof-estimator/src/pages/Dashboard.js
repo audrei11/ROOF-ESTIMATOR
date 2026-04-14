@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllMockProjects } from '../data/projectData';
 import { getAllProjects, deleteProject } from '../utils/storage';
 import JobDetailModal from '../components/JobDetailModal';
+import { generatePDFReport } from '../utils/pdfReport';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ export default function Dashboard() {
   const [openMenuId, setOpenMenuId] = useState(null);
   const [viewJobProject, setViewJobProject] = useState(null);
   const [activeTab, setActiveTab] = useState('Reports');
+  const [measurementDetail, setMeasurementDetail] = useState(null); // project to show in detail modal
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   // Settings state
   const [pitchless, setPitchless] = useState(false);
@@ -219,7 +222,18 @@ export default function Dashboard() {
                           <span className="dash-created-by">by {project.createdBy}</span>
                         )}
                       </td>
-                      <td className="dash-completed">{project.completedAt || '-'}</td>
+                      <td className="dash-completed">
+                        {project.completedAt && project.completedAt !== '-' ? (
+                          <button
+                            className="dash-completed-link"
+                            onClick={e => { e.stopPropagation(); setMeasurementDetail(project); }}
+                          >
+                            {project.completedAt}
+                          </button>
+                        ) : (
+                          <span className="dash-completed-empty">-</span>
+                        )}
+                      </td>
                       <td className="dash-menu-cell">
                         <div className="dash-menu-wrapper">
                           <button
@@ -411,6 +425,209 @@ export default function Dashboard() {
           onClose={() => setViewJobProject(null)}
         />
       )}
+
+      {/* Measurement detail modal */}
+      {measurementDetail && (
+        <MeasurementDetailModal
+          project={measurementDetail}
+          pdfLoading={pdfLoading}
+          onPDF={async () => {
+            setPdfLoading(true);
+            try {
+              await generatePDFReport({
+                address: measurementDetail.address,
+                facets: measurementDetail.facets || [],
+                edges: measurementDetail.edges || [],
+                mapElement: null,
+                projectId: measurementDetail.id,
+              });
+            } finally {
+              setPdfLoading(false);
+            }
+          }}
+          onClose={() => setMeasurementDetail(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+/* ── Measurement Detail Modal ─────────────────────────────────────────── */
+const EDGE_LABELS = {
+  eave:          { label: 'Eaves',          color: '#16a34a' },
+  ridge:         { label: 'Ridges',         color: '#14b8a6' },
+  valley:        { label: 'Valleys',        color: '#ef4444' },
+  hip:           { label: 'Hips',           color: '#a855f7' },
+  rake:          { label: 'Rakes',          color: '#f59e0b' },
+  wall_flashing: { label: 'Wall Flashing',  color: '#3b82f6' },
+  step_flashing: { label: 'Step Flashing',  color: '#ec4899' },
+};
+
+function MeasurementDetailModal({ project, onClose, onPDF, pdfLoading }) {
+  const m = project.measurements;
+
+  // compute from real facets/edges if no pre-computed measurements
+  const totalFootprint = m?.totalFootprintArea ?? 0;
+  const totalRoof      = m?.totalRoofArea      ?? 0;
+  const pitch          = m?.pitch ?? project.pitch ?? '-';
+  const facets         = m?.facets         ?? [];
+  const edgeSummary    = m?.edgeSummary    ?? {};
+
+  const fmt = (n) => Math.round(n).toLocaleString();
+  const edgeEntries = Object.entries(edgeSummary).filter(([, v]) => v > 0);
+
+  return (
+    <div className="md-overlay" onClick={onClose}>
+      <div className="md-modal" onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
+        <div className="md-header">
+          <div>
+            <div className="md-badge">Measurement Details</div>
+            <h2 className="md-address">{project.address}</h2>
+            <p className="md-meta">
+              Completed: <strong>{project.completedAt}</strong>
+              &nbsp;·&nbsp; Assignee: <strong>{project.assignee || 'Precision Roofing'}</strong>
+              &nbsp;·&nbsp; Type: <strong>{project.type || 'DIY'}</strong>
+            </p>
+          </div>
+          <button className="md-close" onClick={onClose}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <div className="md-body">
+          {/* Summary cards */}
+          <div className="md-summary-cards">
+            <div className="md-card">
+              <span className="md-card-label">Footprint Area</span>
+              <span className="md-card-value">{totalFootprint > 0 ? fmt(totalFootprint) : '—'}</span>
+              <span className="md-card-unit">sq ft</span>
+            </div>
+            <div className="md-card">
+              <span className="md-card-label">Total Roof Area</span>
+              <span className="md-card-value blue">{totalRoof > 0 ? fmt(totalRoof) : '—'}</span>
+              <span className="md-card-unit">sq ft</span>
+            </div>
+            <div className="md-card">
+              <span className="md-card-label">Pitch</span>
+              <span className="md-card-value">{pitch}</span>
+              <span className="md-card-unit">rise/run</span>
+            </div>
+            <div className="md-card">
+              <span className="md-card-label">Squares</span>
+              <span className="md-card-value">{totalRoof > 0 ? (totalRoof / 100).toFixed(1) : '—'}</span>
+              <span className="md-card-unit">squares</span>
+            </div>
+          </div>
+
+          {/* Facets table */}
+          {facets.length > 0 && (
+            <div className="md-section">
+              <h3 className="md-section-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+                </svg>
+                Facets / Roof Planes
+              </h3>
+              <table className="md-table">
+                <thead>
+                  <tr>
+                    <th>Plane</th>
+                    <th>Area (sq ft)</th>
+                    <th>Pitch</th>
+                    <th>% of Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {facets.map(f => (
+                    <tr key={f.id}>
+                      <td><span className="md-facet-id">{f.id}</span></td>
+                      <td><strong>{fmt(f.area)}</strong></td>
+                      <td>{f.pitch}</td>
+                      <td>
+                        <div className="md-pct-wrap">
+                          <div className="md-pct-bar" style={{ width: `${Math.round((f.area / totalRoof) * 100)}%` }} />
+                          <span>{totalRoof > 0 ? Math.round((f.area / totalRoof) * 100) : 0}%</span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Edges summary */}
+          {edgeEntries.length > 0 && (
+            <div className="md-section">
+              <h3 className="md-section-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+                Edge Measurements
+              </h3>
+              <div className="md-edges-grid">
+                {edgeEntries.map(([type, feet]) => {
+                  const cfg = EDGE_LABELS[type] || { label: type, color: '#94a3b8' };
+                  return (
+                    <div key={type} className="md-edge-item">
+                      <span className="md-edge-dot" style={{ background: cfg.color }} />
+                      <span className="md-edge-label">{cfg.label}</span>
+                      <span className="md-edge-value">{fmt(feet)} ft</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {!m && (
+            <div className="md-no-data">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" strokeWidth="1.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              </svg>
+              <p>No measurement data yet. Open the project and draw the roof to generate measurements.</p>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="md-footer">
+          <button className="md-cancel-btn" onClick={onClose}>Close</button>
+          <button className="md-open-btn" onClick={() => window.open(`/project/${project.id}`, '_self')}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/>
+            </svg>
+            Open Project
+          </button>
+          <button
+            className="md-pdf-btn"
+            onClick={onPDF}
+            disabled={pdfLoading}
+          >
+            {pdfLoading ? (
+              <>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="md-spin">
+                  <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                </svg>
+                Generating...
+              </>
+            ) : (
+              <>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download PDF
+              </>
+            )}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
