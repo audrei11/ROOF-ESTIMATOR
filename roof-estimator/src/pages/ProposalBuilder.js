@@ -343,7 +343,7 @@ export default function ProposalBuilder() {
             <div className="pb-prev-header">
               <div className="pb-prev-logo">T</div>
               <div>
-                <div className="pb-prev-company">Precision Roofing</div>
+                <div className="pb-prev-company">Ahjin Roofing</div>
                 <div className="pb-prev-sub">Roofing Proposal</div>
               </div>
             </div>

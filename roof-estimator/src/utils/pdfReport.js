@@ -3,7 +3,7 @@ import { jsPDF } from 'jspdf';
 import { slopeFactor } from './measurements';
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Precision Roofing — Client-Side 7-Page PDF (Roofr-Style Template)
+   Ahjin Roofing — Client-Side 7-Page PDF (Roofr-Style Template)
    ─────────────────────────────────────────────────────────────────────────
    Each page: off-screen div → html2canvas (scale: 3) → jsPDF page
    Template matches the Roofr 7-page cycle exactly.
@@ -57,7 +57,7 @@ const hdr = `<div style="display:flex;justify-content:space-between;align-items:
     <div style="width:28px;height:28px;border-radius:6px;background:${BLUE};display:flex;align-items:center;justify-content:center;">
       <span style="color:#fff;font-size:15px;font-weight:800;line-height:1;">T</span>
     </div>
-    <span style="font-size:12px;font-weight:700;color:${DK};letter-spacing:-0.2px;">Precision Roofing</span>
+    <span style="font-size:12px;font-weight:700;color:${DK};letter-spacing:-0.2px;">Ahjin Roofing</span>
   </div>
   <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:${GR};">
     <span style="font-weight:500;">Powered by</span>
@@ -69,7 +69,7 @@ const hdr = `<div style="display:flex;justify-content:space-between;align-items:
 </div>`;
 
 const ftr = (pg) => `<div style="position:absolute;bottom:0;left:0;right:0;padding:10px 38px;display:flex;align-items:center;justify-content:space-between;font-size:7.5px;border-top:1px solid ${LN};background:#fff;">
-  <span style="color:${GR};">This report was powered by Precision Roofing. Copyright &copy; ${new Date().getFullYear()} Precision Roofing | All rights reserved.</span>
+  <span style="color:${GR};">This report was powered by Ahjin Roofing. Copyright &copy; ${new Date().getFullYear()} Ahjin Roofing | All rights reserved.</span>
   <span style="width:22px;height:22px;border-radius:50%;background:${BLUE};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">${pg}</span>
 </div>`;
 
@@ -502,7 +502,7 @@ function page1(d) {
       <div style="display:inline-flex;align-items:center;gap:10px;">
         <div style="width:44px;height:44px;border-radius:8px;background:${BLUE};display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:800;">T</div>
         <div style="text-align:left;">
-          <div style="font-size:16px;font-weight:800;color:${DK};line-height:1.15;">Precision</div>
+          <div style="font-size:16px;font-weight:800;color:${DK};line-height:1.15;">Ahjin Roofing</div>
           <div style="font-size:16px;font-weight:800;color:${DK};line-height:1.15;">Roofing</div>
         </div>
       </div>
@@ -511,7 +511,7 @@ function page1(d) {
     <!-- Title + subtitle centered -->
     <div style="text-align:center;margin-bottom:16px;">
       <div style="font-size:30px;font-weight:700;color:${BLUE};margin-bottom:4px;letter-spacing:-0.3px;">Roof Report</div>
-      <div style="font-size:10px;color:${GR};font-weight:500;">Prepared by Precision Roofing</div>
+      <div style="font-size:10px;color:${GR};font-weight:500;">Prepared by Ahjin Roofing</div>
     </div>
 
     <!-- Address left + Stats right -->
@@ -1045,7 +1045,7 @@ export async function generatePDFReport({ address, facets, edges, mapElement, pr
   const addrSlug = address
     ? address.split(',')[0].replace(/[^a-zA-Z0-9]/g, '_')
     : 'Report';
-  pdf.save(`Precision_Roofing_${addrSlug}.pdf`);
+  pdf.save(`Ahjin_Roofing_${addrSlug}.pdf`);
 
   /* ── Cleanup ──────────────────────────────────────────────────────── */
   document.body.removeChild(wrapper);

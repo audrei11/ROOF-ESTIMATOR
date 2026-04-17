@@ -40,7 +40,7 @@ export default function Settings() {
           <div className="settings-brand">
             <div className="settings-brand-icon">T</div>
             <div className="settings-brand-info">
-              <span className="settings-brand-name">Precision Roofing</span>
+              <span className="settings-brand-name">Ahjin Roofing</span>
               <span className="settings-brand-email">admin@precision.com</span>
             </div>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>

@@ -28,7 +28,7 @@ const DEFAULT_MESSAGES = [
 
   { id:'10', cid:'4', ch:'sms',   dir:'out', body:'Hi! Friendly reminder that Invoice #004 is due this week. Please let us know if you have questions.',           time:'2026-04-07T16:45:00', files:[] },
 
-  { id:'11', cid:'5', ch:'email', dir:'out', body:"Hi Paul! The job is now complete. We've sent over the final invoice. Thank you for choosing Precision Roofing!", time:'2026-04-06T17:00:00', files:[{name:'Invoice_PaulDorian.pdf', size:'450 KB', type:'pdf'}] },
+  { id:'11', cid:'5', ch:'email', dir:'out', body:"Hi Paul! The job is now complete. We've sent over the final invoice. Thank you for choosing Ahjin Roofing!", time:'2026-04-06T17:00:00', files:[{name:'Invoice_PaulDorian.pdf', size:'450 KB', type:'pdf'}] },
 ];
 
 /* ── Helpers ────────────────────────────────────────────────────────────── */

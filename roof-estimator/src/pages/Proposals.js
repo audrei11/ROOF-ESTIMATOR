@@ -179,7 +179,7 @@ export default function Proposals() {
                   <div className="prop-card-meta">
                     <span className="prop-card-customer">{p.customer_name || 'No customer'}</span>
                     <span className="prop-card-dot">&bull;</span>
-                    <span>Precision Roofing</span>
+                    <span>Ahjin Roofing</span>
                   </div>
                   <div className="prop-card-meta">
                     <span>{date}</span>

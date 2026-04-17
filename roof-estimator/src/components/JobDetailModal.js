@@ -7,8 +7,8 @@ const TABS = [
 ];
 
 const ACTIVITY = [
-  { title: 'DIY Report created', date: 'Feb 10 at 3:36 AM', desc: 'DIY Report created by Precision Roofing' },
-  { title: 'DIY Report created', date: 'Yesterday at 10:56 PM', desc: 'DIY Report created by Precision Roofing' },
+  { title: 'DIY Report created', date: 'Feb 10 at 3:36 AM', desc: 'DIY Report created by Ahjin Roofing' },
+  { title: 'DIY Report created', date: 'Yesterday at 10:56 PM', desc: 'DIY Report created by Ahjin Roofing' },
 ];
 
 const MOCK_TASKS = [
@@ -44,7 +44,7 @@ const MOCK_REPORTS = [
 export default function JobDetailModal({ project, onClose }) {
   const [activeTab, setActiveTab] = useState('Job details');
   const [assignee, setAssignee] = useState('Unassigned');
-  const [jobOwner] = useState('Precision Roofing');
+  const [jobOwner] = useState('Ahjin Roofing');
   const [workflow] = useState('Default: New lead');
   const [details, setDetails] = useState('');
   const [newTask, setNewTask] = useState('');
@@ -98,7 +98,7 @@ export default function JobDetailModal({ project, onClose }) {
             <label className="jdm-label">Assignee(s)</label>
             <select className="jdm-select" value={assignee} onChange={e => setAssignee(e.target.value)}>
               <option>Unassigned</option>
-              <option>Precision Roofing</option>
+              <option>Ahjin Roofing</option>
             </select>
           </div>
           <div className="jdm-field">
@@ -107,7 +107,7 @@ export default function JobDetailModal({ project, onClose }) {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
             </label>
             <select className="jdm-select" defaultValue={jobOwner}>
-              <option>Precision Roofing</option>
+              <option>Ahjin Roofing</option>
             </select>
           </div>
           <div className="jdm-field">
@@ -688,7 +688,7 @@ export default function JobDetailModal({ project, onClose }) {
                 <div className="jdm-activity-icon-sm">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2"><circle cx="12" cy="12" r="10"/></svg>
                 </div>
-                <span className="jdm-activity-text">Job created by Precision Roofing</span>
+                <span className="jdm-activity-text">Job created by Ahjin Roofing</span>
               </div>
 
               {ACTIVITY.map((a, i) => (

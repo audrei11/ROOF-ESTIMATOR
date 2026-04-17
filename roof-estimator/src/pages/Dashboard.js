@@ -215,7 +215,7 @@ export default function Dashboard() {
                           Add customer
                         </button>
                       </td>
-                      <td className="dash-assignee">{project.assignee || 'Precision Roofing'}</td>
+                      <td className="dash-assignee">{project.assignee || 'Ahjin Roofing'}</td>
                       <td className="dash-created">
                         <span className="dash-created-date">{project.createdAt || '-'}</span>
                         {project.createdBy && (
@@ -487,7 +487,7 @@ function MeasurementDetailModal({ project, onClose, onPDF, pdfLoading }) {
             <h2 className="md-address">{project.address}</h2>
             <p className="md-meta">
               Completed: <strong>{project.completedAt}</strong>
-              &nbsp;·&nbsp; Assignee: <strong>{project.assignee || 'Precision Roofing'}</strong>
+              &nbsp;·&nbsp; Assignee: <strong>{project.assignee || 'Ahjin Roofing'}</strong>
               &nbsp;·&nbsp; Type: <strong>{project.type || 'DIY'}</strong>
             </p>
           </div>

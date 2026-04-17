@@ -202,7 +202,7 @@ export default function Home() {
                   </div>
                   <div className="home-recent-info">
                     <span className="home-recent-address">{p.address || 'No address'}</span>
-                    <span className="home-recent-meta">{p.createdAt || '—'} · {p.assignee || 'Precision Roofing'}</span>
+                    <span className="home-recent-meta">{p.createdAt || '—'} · {p.assignee || 'Ahjin Roofing'}</span>
                   </div>
                   <StageBadge stage={p.pipelineStage || 'new_lead'} />
                   <svg className="home-recent-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" strokeWidth="2">

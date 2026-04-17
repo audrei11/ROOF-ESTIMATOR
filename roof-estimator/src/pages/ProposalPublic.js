@@ -137,7 +137,7 @@ export default function ProposalPublic() {
         <div className="pp-header">
           <div className="pp-logo">T</div>
           <div>
-            <div className="pp-company">Precision Roofing</div>
+            <div className="pp-company">Ahjin Roofing</div>
             <div className="pp-tagline">Roofing Proposal</div>
           </div>
         </div>
@@ -257,7 +257,7 @@ export default function ProposalPublic() {
 
         {/* Footer */}
         <div className="pp-footer">
-          <p>This document is an electronic proposal from Precision Roofing.</p>
+          <p>This document is an electronic proposal from Ahjin Roofing.</p>
           <p>Proposal ID: {proposal.id}</p>
         </div>
       </div>

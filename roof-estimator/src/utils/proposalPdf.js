@@ -25,7 +25,7 @@ export async function generateSignedProposalPdf(proposal) {
   pdf.setTextColor(255, 255, 255);
   pdf.text('T', margin, 18);
   pdf.setFontSize(14);
-  pdf.text('  Precision Roofing', margin + 8, 18);
+  pdf.text('  Ahjin Roofing', margin + 8, 18);
   pdf.setFont('helvetica', 'normal');
   pdf.setFontSize(9);
   pdf.text('Roofing Proposal', W - margin, 18, { align: 'right' });
@@ -219,11 +219,11 @@ export async function generateSignedProposalPdf(proposal) {
   y += 6;
   pdf.setFontSize(7.5);
   pdf.setTextColor(156, 163, 175);
-  pdf.text('This document was electronically signed via Precision Roofing Proposals.', margin, y);
-  pdf.text(`Copyright © ${new Date().getFullYear()} Precision Roofing | All rights reserved.`, margin, y + 3.5);
+  pdf.text('This document was electronically signed via Ahjin Roofing Proposals.', margin, y);
+  pdf.text(`Copyright © ${new Date().getFullYear()} Ahjin Roofing | All rights reserved.`, margin, y + 3.5);
 
   // Save
-  const fileName = `Precision_Roofing_Proposal_${(proposal.address || proposal.id).replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+  const fileName = `Ahjin_Roofing_Proposal_${(proposal.address || proposal.id).replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
   pdf.save(fileName);
   return pdf;
 }
