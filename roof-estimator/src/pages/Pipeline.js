@@ -12,6 +12,15 @@ const DEFAULT_CONTACTS = [
   { id: '6', name: 'Paul Dorian',     email: '',                    phone: '',              job: '8701 North Rd, Indianapolis, IN' },
 ];
 
+const DEFAULT_PIPELINE = {
+  '1': 'appointment_scheduled',
+  '2': 'proposal_sent',
+  '3': 'proposal_signed',
+  '4': 'work_in_progress',
+  '5': 'completed',
+  '6': 'new_lead',
+};
+
 const STAGES = [
   { id: 'new_lead',              label: 'New Lead',        color: '#64748b', bg: '#f8fafc',  desc: 'Just came in' },
   { id: 'appointment_scheduled', label: 'Appointment',     color: '#3b82f6', bg: '#eff6ff',  desc: 'Visit scheduled' },
@@ -26,7 +35,7 @@ function loadContacts() {
 }
 
 function loadPipeline() {
-  try { const d = localStorage.getItem(PIPELINE_KEY); return d ? JSON.parse(d) : {}; } catch { return {}; }
+  try { const d = localStorage.getItem(PIPELINE_KEY); return d ? { ...DEFAULT_PIPELINE, ...JSON.parse(d) } : DEFAULT_PIPELINE; } catch { return DEFAULT_PIPELINE; }
 }
 
 function savePipeline(data) { localStorage.setItem(PIPELINE_KEY, JSON.stringify(data)); }
