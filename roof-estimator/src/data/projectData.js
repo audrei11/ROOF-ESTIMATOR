@@ -16,6 +16,7 @@ const PROJECT_DATA = [
     createdAt: 'Feb. 10',
     createdBy: 'Ahjin Roofing',
     completedAt: '-',
+    pipelineStage: 'appointment_scheduled',
     polygons: [],
     edges: [],
   },
@@ -32,6 +33,7 @@ const PROJECT_DATA = [
     createdAt: 'Feb. 6',
     createdBy: 'Ahjin Roofing',
     completedAt: 'Yesterday at 4:18 AM',
+    pipelineStage: 'completed',
     polygons: [],
     edges: [],
     measurements: {
@@ -59,6 +61,7 @@ const PROJECT_DATA = [
     createdAt: 'Jan. 31',
     createdBy: 'Ahjin Roofing',
     completedAt: '-',
+    pipelineStage: 'work_in_progress',
     polygons: [],
     edges: [],
   },
@@ -75,6 +78,7 @@ const PROJECT_DATA = [
     createdAt: 'Sept. 8, 2025',
     createdBy: 'Ahjin Roofing',
     completedAt: 'Feb. 17 at 11:31 PM',
+    pipelineStage: 'proposal_signed',
     polygons: [],
     edges: [],
     measurements: {
@@ -102,6 +106,7 @@ const PROJECT_DATA = [
     createdAt: 'Feb. 16',
     createdBy: 'Ahjin Roofing',
     completedAt: 'Feb. 16 at 10:13 PM',
+    pipelineStage: 'proposal_sent',
     polygons: [],
     edges: [],
     measurements: {
@@ -155,6 +160,7 @@ const PROJECT_DATA = [
     createdAt: 'Feb. 12',
     createdBy: 'Ahjin Roofing',
     completedAt: '-',
+    pipelineStage: 'appointment_scheduled',
     polygons: [],
     edges: [],
   },
@@ -171,6 +177,7 @@ const PROJECT_DATA = [
     createdAt: 'Feb. 10',
     createdBy: 'Ahjin Roofing',
     completedAt: 'Feb. 10 at 3:36 AM',
+    pipelineStage: 'work_in_progress',
     polygons: [],
     edges: [],
     measurements: {
@@ -198,6 +205,7 @@ const PROJECT_DATA = [
     createdAt: 'Feb. 9',
     createdBy: 'Ahjin Roofing',
     completedAt: 'Feb. 9 at 7:22 PM',
+    pipelineStage: 'completed',
     polygons: [],
     edges: [],
     measurements: {
