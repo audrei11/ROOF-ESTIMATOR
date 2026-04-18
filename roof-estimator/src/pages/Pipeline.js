@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 
 const CONTACTS_KEY = 'precision-contacts';
-const PIPELINE_KEY = 'precision-pipeline';
+const PIPELINE_KEY = 'ahjin-pipeline-v2';
 
 const DEFAULT_CONTACTS = [
   { id: '1', name: 'Biak Lian',       email: '',                    phone: '',              job: '7634 Cynthia Dr, Indianapolis, IN' },
