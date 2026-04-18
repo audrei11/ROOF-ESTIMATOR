@@ -4,22 +4,15 @@ const CONTACTS_KEY = 'precision-contacts';
 const PIPELINE_KEY = 'ahjin-pipeline-v2';
 
 const DEFAULT_CONTACTS = [
-  { id: '1', name: 'Biak Lian',       email: '',                    phone: '',              job: '7634 Cynthia Dr, Indianapolis, IN' },
-  { id: '2', name: 'Crystal Wheeler', email: '',                    phone: '',              job: '2722 Station St, Indianapolis, IN' },
-  { id: '3', name: 'Hazel Utley',     email: '',                    phone: '',              job: '2745 Station Rd, Avon, IN' },
-  { id: '4', name: 'Ira&Kath',        email: 'Ira_kathc@yahoo.com', phone: '(812) 350-7490',job: '5530 Smoketree Ln, Greenwood, IN' },
-  { id: '5', name: 'Kelly Moore',     email: '',                    phone: '',              job: '515 Delbrick Ln, Brownsburg, IN' },
-  { id: '6', name: 'Paul Dorian',     email: '',                    phone: '',              job: '8701 North Rd, Indianapolis, IN' },
+  { id: '1', name: 'Biak Lian',       email: '',                    phone: '',               job: '7634 Cynthia Dr, Indianapolis, IN',    defaultStage: 'appointment_scheduled' },
+  { id: '2', name: 'Crystal Wheeler', email: '',                    phone: '',               job: '2722 Station St, Indianapolis, IN',    defaultStage: 'proposal_sent' },
+  { id: '3', name: 'Hazel Utley',     email: '',                    phone: '',               job: '2745 Station Rd, Avon, IN',            defaultStage: 'proposal_signed' },
+  { id: '4', name: 'Ira&Kath',        email: 'Ira_kathc@yahoo.com', phone: '(812) 350-7490', job: '5530 Smoketree Ln, Greenwood, IN',     defaultStage: 'work_in_progress' },
+  { id: '5', name: 'Kelly Moore',     email: '',                    phone: '',               job: '515 Delbrick Ln, Brownsburg, IN',      defaultStage: 'completed' },
+  { id: '6', name: 'Paul Dorian',     email: '',                    phone: '',               job: '8701 North Rd, Indianapolis, IN',      defaultStage: 'new_lead' },
 ];
 
-const DEFAULT_PIPELINE = {
-  '1': 'appointment_scheduled',
-  '2': 'proposal_sent',
-  '3': 'proposal_signed',
-  '4': 'work_in_progress',
-  '5': 'completed',
-  '6': 'new_lead',
-};
+const DEFAULT_PIPELINE = Object.fromEntries(DEFAULT_CONTACTS.map(c => [c.id, c.defaultStage]));
 
 const STAGES = [
   { id: 'new_lead',              label: 'New Lead',        color: '#64748b', bg: '#f8fafc',  desc: 'Just came in' },
@@ -31,7 +24,16 @@ const STAGES = [
 ];
 
 function loadContacts() {
-  try { const d = localStorage.getItem(CONTACTS_KEY); return d ? JSON.parse(d) : DEFAULT_CONTACTS; } catch { return DEFAULT_CONTACTS; }
+  try {
+    const d = localStorage.getItem(CONTACTS_KEY);
+    if (!d) return DEFAULT_CONTACTS;
+    const saved = JSON.parse(d);
+    // Merge defaultStage from DEFAULT_CONTACTS into saved contacts by id
+    return saved.map(c => {
+      const def = DEFAULT_CONTACTS.find(dc => dc.id === c.id);
+      return def ? { ...def, ...c } : c;
+    });
+  } catch { return DEFAULT_CONTACTS; }
 }
 
 function loadPipeline() {
@@ -50,7 +52,11 @@ export default function Pipeline() {
   const [moveModal, setMoveModal]   = useState(null);
 
   // Each contact has a stage — default new_lead
-  const getStage = (id) => pipeline[id] || 'new_lead';
+  const getStage = (id) => {
+    if (pipeline[id]) return pipeline[id];
+    const def = DEFAULT_CONTACTS.find(c => c.id === id);
+    return def?.defaultStage || 'new_lead';
+  };
 
   const moveContact = (contactId, stageId) => {
     const updated = { ...pipeline, [contactId]: stageId };
